@@ -1,0 +1,44 @@
+def main():
+    c = [0] * 9
+    g = [0] * 9
+    ef = [0] * 9
+    ordine = [0] * 9
+    castig = 0
+
+    gr = float(input("Capacitate rucsac: "))
+    n = int(input("\nNumar obiecte: "))
+
+    for i in range(1, n + 1):
+        ordine[i] = i
+        g[i] = float(input("\ngreutate obiect {} = ".format(i)))
+        c[i] = float(input("castig obiect {} = ".format(i)))
+        ef[i] = c[i] / g[i]
+
+    inv = True
+    while inv:
+        inv = False
+        for i in range(1, n):
+            if ef[i] < ef[i + 1]:
+                ef[i], ef[i + 1] = ef[i + 1], ef[i]
+                c[i], c[i + 1] = c[i + 1], c[i]
+                g[i], g[i + 1] = g[i + 1], g[i]
+                ordine[i], ordine[i + 1] = ordine[i + 1], ordine[i]
+                inv = True
+
+    i = 1
+    while gr > 0 and i <= n:
+        if gr > g[i]:
+            print("\nobiectul {}: 1".format(ordine[i]))
+            gr -= g[i]
+            castig += c[i]
+        else:
+            print("obiectul {}: {:.2f}".format(ordine[i], gr / g[i]))
+            castig += c[i] * (gr / g[i])
+            gr = 0
+        i += 1
+
+    print("\ncastig total = {:.3f}".format(castig))
+
+
+if __name__ == "__main__":
+    main()
